@@ -1,0 +1,24 @@
+server:
+  port: 8044
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8071/eureka/,http://localhost:8072/eureka/
+    enabled: true
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+spring:
+  application:
+    name: test-hytrixdashboard
+
+turbine:
+  app-config: test-consumerfeign
+  cluster-name-expression: new String('default')
+  combine-host-port: true

@@ -1,0 +1,30 @@
+server:
+  port: 8086
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: test-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8071/eureka/,http://localhost:8072/eureka/
+    enabled: true
+
+#启用熔断
+feign:
+  hystrix:
+    enable: true
+
+#service-id��ʽ���õĳ�ʱʱ��
+ribbon:
+  ConnectTimeout: 2000
+  ReadTimeout: 4000
+
+zuul:
+  routes:
+    api-fc:
+      path: /fc/**
+      serviceId: test-consumerfeign

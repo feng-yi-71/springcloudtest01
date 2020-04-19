@@ -1,0 +1,103 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8071/eureka/,http://localhost:8072/eureka/
+    enabled: true
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+spring:
+  application:
+    name: test-consumerfeign
+  profiles: test-conf
+
+feign:
+  hystrix:
+    enabled: true
+
+#actuator默认打开health，info两个端点，下面的配置开启监控服务的所有端点。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#下面的配置用于排除指定的端点，作用与上面的配置相反
+#management.endpoints.web.exposure.exclude=
+
+---
+server:
+  port: 8085
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8071/eureka/,http://localhost:8072/eureka/
+    enabled: true
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+spring:
+  application:
+    name: test-consumerfeign
+  profiles: feign8085
+
+feign:
+  hystrix:
+    enabled: true
+
+#actuator默认打开health，info两个端点，下面的配置开启监控服务的所有端点。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#下面的配置用于排除指定的端点，作用与上面的配置相反
+#management.endpoints.web.exposure.exclude=
+
+---
+server:
+  port: 8086
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8071/eureka/,http://localhost:8072/eureka/
+    enabled: true
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+spring:
+  application:
+    name: test-consumerfeign
+  profiles: feign8086
+
+feign:
+  hystrix:
+    enabled: true
+
+#actuator默认打开health，info两个端点，下面的配置开启监控服务的所有端点。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#下面的配置用于排除指定的端点，作用与上面的配置相反
+#management.endpoints.web.exposure.exclude=

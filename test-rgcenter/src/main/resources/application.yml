@@ -1,0 +1,30 @@
+server:
+  port: 8071
+
+spring:
+  application:
+    name: eureka-server
+  profiles: test-rgcenter
+
+eureka:
+  instance:
+    hostname: test-rgcenter
+  client:
+    service-url:
+      defaultZone: http://test-rgcenter2:8072/eureka/
+
+---
+server:
+  port: 8072
+
+spring:
+  application:
+    name: eureka-server
+  profiles: test-rgcenter2
+
+eureka:
+  instance:
+    hostname: test-rgcenter2
+  client:
+    service-url:
+      defaultZone: http://test-rgcenter:8071/eureka/

@@ -1,0 +1,68 @@
+server:
+  port: 8086
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: test-gateway
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8071/eureka/,http://localhost:8072/eureka/
+    enabled: true
+
+#启用熔断
+feign:
+  hystrix:
+    enable: true
+
+#service-id��ʽ���õĳ�ʱʱ��
+ribbon:
+  ConnectTimeout: 2000
+  ReadTimeout: 4000
+  #对当前实例的重试次数
+  maxAutoRetries: 1
+  #切换实例的重试次数
+  maxAutoRetriesNextServer: 3
+  #对所有操作请求都进行重试
+  okToRetryOnAllOperations: true
+
+zuul:
+  routes:
+    api-fc:
+      path: /fc/**
+      serviceId: test-consumerfeign
+  #开启重试，默认值为false
+  retryable: true
+  #默认情况，zuul在请求路由时，会过滤掉http请求头信息中的一些敏感信息
+  #防止敏感信息被传递到外部，如果需要使用Cookies,Set-Cookie,Authorization
+  #可参照如下方式配置
+  sensitive-headers: Cookies, Set-Cookie, Authorization
+
+#hystrix的超时时间，要比ribbon设置的超时时间大，如果ribbon超时但hystrix未超时，
+#则zuul会启动重试功能（也可以通过配置禁用）。超时时间单位是毫秒。
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+#配置zuul管理服务端点，配置后通过如下的链接查看zuul中的服务信息
+#http://localhost:8090/actuator/routes/details
+#上面的8090端口号是zuul服务端口号
+#actuator默认打开health，info两个端点，下面的配置开启监控服务的所有端点。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: *
+    health:
+      show-details: always
